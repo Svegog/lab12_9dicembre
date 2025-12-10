@@ -5,9 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.Map;
 import java.io.Serial;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * The GUI class representing the graphical user interface of the application.
@@ -17,7 +17,7 @@ public final class GUI extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
     private final Map<JButton, Pair<Integer, Integer>> buttons = new LinkedHashMap<>();
-    //private final Logics logics;
+    private final transient Logics logics;
 
     /**
      * Constructs a GUI with the specified size.
@@ -25,7 +25,7 @@ public final class GUI extends JFrame {
      * @param size the size of the grid
      */
     public GUI(final int size) {
-        //this.logics = new LogicsImpl(size);
+        this.logics = new LogicsImpl(size);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100 * size, 100 * size);
         // Layout
@@ -37,8 +37,8 @@ public final class GUI extends JFrame {
                 final JButton button = new JButton(" ");
                 button.addActionListener(e -> {
                     final Pair<Integer, Integer> buttonPosition = buttons.get(button);
-                    button.setText(buttonPosition.toString());
-                    if (buttonPosition.equals(new Pair<>(0, 0))) {
+                    button.setText(logics.changeState(buttonPosition.x() + size * buttonPosition.y()));
+                    if (logics.isWinReached()) {
                         // System.exit(1); // Too brutal!
                         dispose();
                     }
