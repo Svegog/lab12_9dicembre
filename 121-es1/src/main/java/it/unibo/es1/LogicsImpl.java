@@ -1,5 +1,6 @@
 package it.unibo.es1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,9 @@ import java.util.List;
  */
 public class LogicsImpl implements Logics {
 
-    private static final String ERROR_MESSAGE = "Unimplemented method";
+    // private static final String ERROR_MESSAGE = "Unimplemented method";
+    private final int numberOfButton;
+    private final List<Integer> buttonNumbers;
 
     /**
      * Constructor.
@@ -15,7 +18,12 @@ public class LogicsImpl implements Logics {
      * @param size the size of the logics
      */
     public LogicsImpl(final int size) {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+        this.numberOfButton = size;
+        this.buttonNumbers = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            buttonNumbers.add(0);
+        }
     }
 
     /**
@@ -23,7 +31,7 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public int size() {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+        return this.numberOfButton;
     }
 
     /**
@@ -31,7 +39,7 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public List<Integer> values() {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+        return List.copyOf(this.buttonNumbers);
     }
 
     /**
@@ -39,7 +47,11 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public List<Boolean> enabledStates() {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+        final List<Boolean> listOfState = new ArrayList<>();
+        for (final Integer elem : buttonNumbers) {
+            listOfState.add(elem < numberOfButton);
+        }
+        return listOfState;
     }
 
     /**
@@ -47,7 +59,12 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public int hit(final int elem) {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+
+        int change = this.buttonNumbers.get(elem);
+        change++;
+        this.buttonNumbers.set(elem, change);
+
+        return change;
     }
 
     /**
@@ -55,7 +72,17 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public String result() {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+
+        String result = "<<";
+        for (int i = 0; i < this.buttonNumbers.size(); i++) {
+            result = result.concat(Integer.toString(this.buttonNumbers.get(i)));
+            if (i + 1 != this.buttonNumbers.size()) {
+                result = result.concat("|");
+            }
+        }
+        result = result.concat(">>");
+
+        return result;
     }
 
     /**
@@ -63,6 +90,6 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public boolean toQuit() {
-        throw new UnsupportedOperationException(ERROR_MESSAGE);
+      return buttonNumbers.stream().distinct().count() == 1;
     }
 }
