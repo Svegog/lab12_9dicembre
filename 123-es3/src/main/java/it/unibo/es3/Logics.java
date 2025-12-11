@@ -13,7 +13,7 @@ public interface Logics {
      * 
      * @return true if the point are neighbor, false otherwise
      */
-    boolean isNeighbor(Pair<Integer,Integer> p1, Pair<Integer,Integer> p2);
+    boolean isNeighbor(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2);
 
     /**
      * The main function that updates the matrix of the game.
@@ -27,7 +27,7 @@ public interface Logics {
      * 
      * @return the empty string " " if the point is not in the data structure and "*" otherwise
      */
-    String getButtonState(Pair<Integer,Integer> p1);
+    String getButtonState(Pair<Integer, Integer> p1);
 
     /**
      * Check if the game is finished.

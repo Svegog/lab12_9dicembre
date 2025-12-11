@@ -19,7 +19,7 @@ public final class GUI extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
     private final List<JButton> cells = new ArrayList<>();
-    private final Logics logics;
+    private final transient Logics logics;
     private final int size;
 
     /**
@@ -62,9 +62,9 @@ public final class GUI extends JFrame {
     }
 
     private void renderFrame() {
-        IntStream.range(0,size).forEach(
+        IntStream.range(0, size).forEach(
             y -> IntStream.range(0, size).forEach(
-                x -> this.cells.get(x + size*y).setText(this.logics.getButtonState(new Pair<>(x,y)))
+                x -> this.cells.get(x + size * y).setText(this.logics.getButtonState(new Pair<>(x, y)))
             )
         );
     }

@@ -11,14 +11,14 @@ import java.util.stream.IntStream;
 public class LogicsImpl implements Logics {
 
     private static final int RANDOMBUTTONVALUE = 3;
-    private final Set<Pair<Integer,Integer>> changedButtons;
+    private final Set<Pair<Integer, Integer>> changedButtons;
     private final int size;
 
     LogicsImpl(final int size) {
         this.size = size;
         this.changedButtons = new HashSet<>();
 
-        Random randomValue = new Random();
+        final Random randomValue = new Random();
         IntStream.range(0, RANDOMBUTTONVALUE)
             .forEach(elem -> changedButtons
                 .add(new Pair<>(randomValue.nextInt(size), randomValue.nextInt(size)))
@@ -29,7 +29,7 @@ public class LogicsImpl implements Logics {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNeighbor(Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) {
+    public boolean isNeighbor(final Pair<Integer, Integer> p1, final Pair<Integer, Integer> p2) {
         return !p1.equals(p2) && Math.abs(p1.x() - p2.x()) <= 1 && Math.abs(p1.y() - p2.y()) <= 1;
     }
 
@@ -38,24 +38,24 @@ public class LogicsImpl implements Logics {
      */
     @Override
     public void updateMatrix() {
-        Set<Pair<Integer,Integer>> tempButton = Set.copyOf(this.changedButtons);
+        final Set<Pair<Integer, Integer>> tempButton = Set.copyOf(this.changedButtons);
         IntStream.range(0, this.size).forEach(
-             y -> IntStream.range(0, this.size).forEach(
-                 x -> {
-                     final Pair<Integer, Integer> point = new Pair<>(x, y);
-                     if (tempButton.stream().anyMatch(elem -> this.isNeighbor(elem, point))) {
-                         this.changedButtons.add(point);
-                     }
-                 }   
-             )
-        );       
+            y -> IntStream.range(0, this.size).forEach(
+                x -> {
+                    final Pair<Integer, Integer> point = new Pair<>(x, y);
+                    if (tempButton.stream().anyMatch(elem -> this.isNeighbor(elem, point))) {
+                        this.changedButtons.add(point);
+                    }
+                }
+            )
+        ); 
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getButtonState(Pair<Integer, Integer> p1) {
+    public String getButtonState(final Pair<Integer, Integer> p1) {
         return this.changedButtons.contains(p1) ? "*" : " ";
     }
 
@@ -66,5 +66,4 @@ public class LogicsImpl implements Logics {
     public boolean toQuit() {
         return this.changedButtons.size() == size * size;
     }
-    
 }

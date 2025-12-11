@@ -5,6 +5,8 @@ package it.unibo.es3;
  */
 public final class Test {
 
+    private static final int GRIDSIZE = 18;
+
     private Test() { }
 
     /*
@@ -28,6 +30,6 @@ public final class Test {
      * @param args command line arguments (ignored)
      */
     public static void main(final String... args) {
-        new GUI(18); // only use odd numbers as arguments!
+        new GUI(GRIDSIZE); // only use odd numbers as arguments!
     }
 }
